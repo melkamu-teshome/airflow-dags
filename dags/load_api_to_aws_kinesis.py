@@ -45,6 +45,7 @@ def _process_user_posts(new_api_user_id=1, **context):
         stream_name = "user-posts-data-stream"    
         user_posts = context['task_instance'].xcom_pull(task_ids='extract_userposts', key='user_posts')
         logger.info(f'api data|||user_posts:: {user_posts}')
+        
 
         # Writing data one by one to kinesis data stream
         for user_post in user_posts:
@@ -87,3 +88,4 @@ with DAG(dag_id='load_api_aws_kinesis', default_args={'owner': 'Sovan'}, tags=["
     )
 
     get_api_userId_params >> extract_userposts >>  write_userposts_to_stream
+    # melkamu
